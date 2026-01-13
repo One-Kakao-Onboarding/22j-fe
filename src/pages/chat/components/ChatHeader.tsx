@@ -27,7 +27,7 @@ export function ChatHeader({ chatRoomInfo }: ChatHeaderProps) {
             ))}
           </div>
           <div>
-            <h2 className="font-semibold text-sm">{chatRoomInfo.name}</h2>
+            <h2 className="font-semibold text-sm line-clamp-1">{chatRoomInfo.name}</h2>
             <div className="flex items-center gap-1 text-xs text-gray-500">
               <HiUsers className="w-3 h-3" />
               <span>{chatRoomInfo.memberCount}</span>

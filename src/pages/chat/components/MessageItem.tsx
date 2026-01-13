@@ -20,9 +20,6 @@ export function MessageItem({ message, showSenderInfo }: MessageItemProps) {
                   {message.sender.charAt(0)}
                 </AvatarFallback>
               </Avatar>
-              <span className="text-xs text-gray-500 max-w-[60px] truncate">
-                {message.sender.split('(')[1]?.replace(')', '') || message.sender}
-              </span>
             </>
           ) : (
             <div className="w-8" />
@@ -36,7 +33,7 @@ export function MessageItem({ message, showSenderInfo }: MessageItemProps) {
         <div
           className={`rounded-lg px-3 py-2 ${
             message.isMe
-              ? 'bg-yellow-400 text-black'
+              ? 'bg-yellow-300 text-black'
               : 'bg-white text-black'
           }`}
           style={{

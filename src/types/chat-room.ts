@@ -10,6 +10,7 @@ export type ChatRoom = {
 
 export type Message = {
   id: string
+  roomId: string
   sender: string
   content: string
   time: string
@@ -21,5 +22,4 @@ export type ChatRoomInfo = {
   id: string
   name: string
   memberCount: number
-  avatars: string[]
 }
