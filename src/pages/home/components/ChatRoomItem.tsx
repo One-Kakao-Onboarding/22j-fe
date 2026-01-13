@@ -1,7 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/Avatar'
 import { Link } from 'react-router'
 import { RiPushpinLine } from 'react-icons/ri'
-import type { ChatRoom } from '@/pages/home/data'
+import type { ChatRoom } from '@/types/chat-room'
 
 type ChatRoomItemProps = {
   room: ChatRoom

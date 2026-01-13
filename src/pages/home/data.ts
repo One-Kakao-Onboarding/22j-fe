@@ -1,22 +1,6 @@
-export type ChatRoom = {
-  id: string
-  name: string
-  lastMessage: string
-  time: string
-  avatar: string | null
-  memberCount?: number
-  isPinned?: boolean
-}
+import type { ChatRoom } from "@/types/chat-room";
 
 export const chatRooms: ChatRoom[] = [
-  {
-    id: '1',
-    name: '별가리',
-    lastMessage: '안녕하세요 한별님 좋은 아침입니다 😄 보정 완료되어...',
-    time: '오후 1:04',
-    avatar: null,
-    isPinned: true,
-  },
   {
     id: '2',
     name: '2026 그룹공채 원 카카오 온보딩',

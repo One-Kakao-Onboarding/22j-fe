@@ -1,5 +1,5 @@
 import { ChatRoomItem } from "@/pages/home/components/ChatRoomItem"
-import type { ChatRoom } from "@/pages/home/data"
+import type { ChatRoom } from "@/types/chat-room"
 
 
 type ChatRoomListProps = {

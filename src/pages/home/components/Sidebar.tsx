@@ -10,7 +10,7 @@ const sidebarButtons = [
 
 export function Sidebar() {
   return (
-    <div className="w-16 bg-gray-50 flex flex-col items-center py-4 gap-6">
+    <div className="w-16 bg-gray-50 flex flex-col items-center py-6 gap-4">
       {sidebarButtons.slice(0, 3).map(({ icon: Icon, active }, index) => (
         <button
           key={`sidebar-${index}`}
@@ -23,9 +23,9 @@ export function Sidebar() {
       {sidebarButtons.slice(3).map(({ icon: Icon }, index) => (
         <button
           key={`sidebar-${index + 3}`}
-          className="w-14 h-14 rounded-full bg-gray-200 flex items-center justify-center text-gray-600"
+          className="w-14 h-5 rounded-full bg-gray-200 flex items-center justify-center text-gray-600"
         >
-          <Icon className="w-6 h-6 text-gray-600 leading-none" />
+          <Icon className="w-4 h-4 text-gray-600 leading-none" />
         </button>
       ))}
     </div>
