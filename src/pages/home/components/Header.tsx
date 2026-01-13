@@ -1,21 +1,22 @@
-import { HiOutlineChevronDown, HiOutlineSearch, HiOutlinePlus } from 'react-icons/hi'
+import { HiOutlineSearch, HiOutlinePlus } from 'react-icons/hi'
+import { HiChatBubbleOvalLeftEllipsis, HiOutlineCog8Tooth } from 'react-icons/hi2'
 
 export function ChatHeader() {
   return (
     <div>
       <div className="h-14 flex items-center justify-between px-4">
         <div className="flex items-center gap-2">
-          <h1 className="text-md font-semibold">채팅</h1>
-          <button className="text-gray-500">
-            <HiOutlineChevronDown className="w-4 h-4 bg-white" />
-          </button>
+          <h1 className="text-lg font-semibold">채팅</h1>
         </div>
         <div className="flex items-center gap-3">
           <button className="text-gray-600">
-            <HiOutlineSearch className="w-5 h-5 bg-white" />
+            <HiOutlineSearch className="w-6 h-6 bg-white" />
           </button>
           <button className="text-gray-600">
-            <HiOutlinePlus className="w-5 h-5 bg-white" />
+            <HiOutlinePlus className="w-6 h-6 bg-white" />
+          </button>
+          <button className="text-gray-600">
+            <HiOutlineCog8Tooth className="w-6 h-6 bg-white" />
           </button>
         </div>
       </div>
@@ -26,7 +27,10 @@ export function ChatHeader() {
           전체
         </button>
         <button className="px-4 py-1.5 rounded-full bg-white border border-gray-200 text-black text-sm font-medium">
-          안읽음
+          <HiChatBubbleOvalLeftEllipsis className="w-4 h-4 text-black" />
+        </button>
+        <button className="px-4 py-1.5 rounded-full bg-white border border-gray-200 text-black text-sm font-medium">
+          ChatGPT
         </button>
         <button className="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center">
           <HiOutlinePlus className="w-4 h-4 text-black" />

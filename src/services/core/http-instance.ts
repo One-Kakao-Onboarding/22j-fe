@@ -27,7 +27,7 @@ export const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 class Instance {
     private readonly baseUrl: string;
-    constructor(baseUrl: string = BASE_URL ?? '') {
+    constructor(baseUrl: string = BASE_URL ?? 'localhost:8080') {
       this.baseUrl = baseUrl;
     }
 

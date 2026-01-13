@@ -34,25 +34,25 @@ export function MessageItem({ message, showSenderInfo, showTimeInfo }: MessageIt
         {showSenderInfo && !message.isMe && (
           <span className="text-xs text-black px-1">{message.sender}</span>
         )}
-        <div
-          className={`rounded-lg px-3 py-2 ${
-            message.isMe
-              ? 'bg-yellow-300 text-black'
-              : 'bg-white text-black'
-          }`}
-          style={{
-            borderRadius: message.isMe ? '18px 18px 4px 18px' : '4px 18px 18px 18px',
-          }}
-        >
-          <p className="text-sm whitespace-pre-wrap wrap-break-words">{message.content}</p>
-        </div>
-        {showTimeInfo && (
-          <div className="flex items-center gap-1 px-1">
-            <span className="text-xs text-black">
+        <div className={`flex items-end gap-1 ${message.isMe ? 'flex-row-reverse' : 'flex-row'}`}>
+          <div
+            className={`rounded-lg px-3 py-2 ${
+              message.isMe
+                ? 'bg-yellow-300 text-black'
+                : 'bg-white text-black'
+            }`}
+            style={{
+              borderRadius: message.isMe ? '18px 18px 4px 18px' : '4px 18px 18px 18px',
+            }}
+          >
+            <p className="text-sm whitespace-pre-wrap wrap-break-words">{message.content}</p>
+          </div>
+          {showTimeInfo && (
+            <span className="text-xs text-black whitespace-nowrap">
               {message.time.format('A h:mm')}
             </span>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   )

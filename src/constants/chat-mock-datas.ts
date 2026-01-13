@@ -7,10 +7,18 @@ export const chatRooms: ChatRoom[] = [
     {
       id: '1',
       name: '김도훈',
-      lastMessage: '톡서랍을 제외한 다른 데이터/UI는 카카오톡 PC 버전을 가상으로 흉내낸 것으로 실제로 동작하지 않습니다.',
+      lastMessage: '톡서랍을 제외한 다른 데이터/UI는 카카오톡 버전을 가상으로 흉내낸 것으로 실제로 동작하지 않습니다.',
       time: BASE_TIME,
       avatar: null,
       isSelfChat: true,
+    },
+    {
+      id: '11',
+      name: '공지',
+      lastMessage: '나와의 채팅 이외의 UI는 카톡 UI를 흉내낸 가짜입니다.',
+      time: BASE_TIME,
+      avatar: null,
+      isSelfChat: false,
     },
     {
       id: '2',
@@ -146,4 +154,13 @@ export const chatMessages: Message[] = [
       isMe: true,
       avatar: null,
     },
+    {
+      id: '12',
+      roomId: '11',
+      sender: '공지',
+      content: '나와의 채팅 이외의 UI는 카톡 UI를 흉내낸 가짜입니다.',
+      time: BASE_TIME,
+      isMe: false,
+      avatar: null,
+    }
 ]

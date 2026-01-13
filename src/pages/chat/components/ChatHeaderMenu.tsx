@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router'
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -11,10 +12,10 @@ import {
 import { HiOutlineDotsVertical } from 'react-icons/hi'
 
 type ChatHeaderMenuProps = {
-  onOpenDrawer?: () => void
+  chatRoomId?: string
 }
 
-export function ChatHeaderMenu({ onOpenDrawer }: ChatHeaderMenuProps) {
+export function ChatHeaderMenu({ chatRoomId }: ChatHeaderMenuProps) {
   const [notificationsEnabled, setNotificationsEnabled] = useState(true)
 
   return (
@@ -31,8 +32,10 @@ export function ChatHeaderMenu({ onOpenDrawer }: ChatHeaderMenuProps) {
         </DropdownMenuItem>
         <DropdownMenuItem>채팅방 다시 만들기</DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={onOpenDrawer}>
-          채팅방 서랍
+        <DropdownMenuItem asChild>
+          <Link to={chatRoomId ? `/chat/${chatRoomId}/drawer` : '#'}>
+            채팅방 서랍
+          </Link>
         </DropdownMenuItem>
         <DropdownMenuItem>톡게시판</DropdownMenuItem>
         <DropdownMenuItem>브리핑 보드</DropdownMenuItem>
