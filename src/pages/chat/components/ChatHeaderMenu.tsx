@@ -13,7 +13,11 @@ import {
 } from '@/components/ui/DropdownMenu'
 import { HiOutlineDotsVertical } from 'react-icons/hi'
 
-export function ChatHeaderMenu() {
+type ChatHeaderMenuProps = {
+  onOpenDrawer?: () => void
+}
+
+export function ChatHeaderMenu({ onOpenDrawer }: ChatHeaderMenuProps) {
   const [notificationsEnabled, setNotificationsEnabled] = useState(true)
 
   return (
@@ -31,13 +35,13 @@ export function ChatHeaderMenu() {
         <DropdownMenuItem>채팅방 다시 만들기</DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuSub>
-          <DropdownMenuSubTrigger>
+          <DropdownMenuSubTrigger onClick={onOpenDrawer}>
             채팅방 서랍
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
-            <DropdownMenuItem>사진/동영상</DropdownMenuItem>
-            <DropdownMenuItem>파일</DropdownMenuItem>
-            <DropdownMenuItem>링크</DropdownMenuItem>
+            <DropdownMenuItem onClick={onOpenDrawer}>사진/동영상</DropdownMenuItem>
+            <DropdownMenuItem onClick={onOpenDrawer}>파일</DropdownMenuItem>
+            <DropdownMenuItem onClick={onOpenDrawer}>링크</DropdownMenuItem>
           </DropdownMenuSubContent>
         </DropdownMenuSub>
         <DropdownMenuItem>톡게시판</DropdownMenuItem>

@@ -4,10 +4,10 @@ import type { Message } from '@/types/chat-room'
 type MessageItemProps = {
   message: Message
   showSenderInfo: boolean
-  previousSender?: string
+  showTimeInfo: boolean
 }
 
-export function MessageItem({ message, showSenderInfo }: MessageItemProps) {
+export function MessageItem({ message, showSenderInfo, showTimeInfo }: MessageItemProps) {
   return (
     <div className={`flex gap-2 ${message.isMe ? 'justify-end' : ''}`}>
       {!message.isMe && (
@@ -42,9 +42,11 @@ export function MessageItem({ message, showSenderInfo }: MessageItemProps) {
         >
           <p className="text-sm whitespace-pre-wrap wrap-break-words">{message.content}</p>
         </div>
-        <div className="flex items-center gap-1 px-1">
-          <span className="text-xs text-gray-400">{message.time}</span>
-        </div>
+        {showTimeInfo && (
+          <div className="flex items-center gap-1 px-1">
+            <span className="text-xs text-gray-400">{message.time}</span>
+          </div>
+        )}
       </div>
     </div>
   )

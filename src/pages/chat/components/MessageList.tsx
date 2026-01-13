@@ -10,12 +10,21 @@ export function MessageList({ messages }: MessageListProps) {
     <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
       {messages.map((message, index) => {
         const showSenderInfo = index === 0 || messages[index - 1].sender !== message.sender
+        
+        // 다음 메시지가 있고, sender가 같고, time이 같으면 시간을 보여주지 않음
+        const nextMessage = messages[index + 1]
+        const showTimeInfo = !(
+          nextMessage &&
+          nextMessage.sender === message.sender &&
+          nextMessage.time === message.time
+        )
+        
         return (
           <MessageItem
             key={message.id}
             message={message}
             showSenderInfo={showSenderInfo}
-            previousSender={messages[index - 1]?.sender}
+            showTimeInfo={showTimeInfo}
           />
         )
       })}

@@ -1,49 +1,67 @@
+import { useState } from 'react'
 import { Avatar, AvatarFallback } from '@/components/ui/Avatar'
 import { Link } from 'react-router'
-import { HiOutlineSearch, HiOutlinePhone, HiOutlineVideoCamera } from 'react-icons/hi'
+import { HiOutlineSearch, HiOutlinePhone, HiOutlineVideoCamera, HiOutlineCloud } from 'react-icons/hi'
 import { FaArrowLeft } from 'react-icons/fa'
 import { HiUsers } from 'react-icons/hi2'
 import { ChatHeaderMenu } from '@/pages/chat/components/ChatHeaderMenu'
-import type { ChatRoomInfo } from '@/types/chat-room'
+import { TalkDrawer } from '@/pages/chat/components/TalkDrawer'
+import type { ChatRoom } from '@/types/chat-room'
 
 type ChatHeaderProps = {
-  chatRoomInfo: ChatRoomInfo
+  chatRoom: ChatRoom
 }
 
-export function ChatHeader({ chatRoomInfo }: ChatHeaderProps) {
+export function ChatHeader({ chatRoom }: ChatHeaderProps) {
+  const [drawerOpen, setDrawerOpen] = useState(false)
+
   return (
-    <div className="h-14 bg-white flex items-center justify-between px-4 border-b border-gray-200">
-      <div className="flex items-center gap-3">
-        <Link to="/" className="text-gray-600">
-          <FaArrowLeft className="w-5 h-5" />
-        </Link>
-        <div className="flex items-center gap-2">
-          <Avatar className="w-8 h-8 border-2 border-white">
-            <AvatarFallback className="bg-blue-200 text-xs">
-              {chatRoomInfo.name.charAt(0)}
-            </AvatarFallback>
-          </Avatar>
-          <div>
-            <h2 className="font-semibold text-sm line-clamp-1">{chatRoomInfo.name}</h2>
-            {chatRoomInfo.memberCount > 1 && <div className="flex items-center gap-1 text-xs text-gray-500">
-              <HiUsers className="w-3 h-3" />
-              <span>{chatRoomInfo.memberCount}</span>
-            </div>}
+    <>
+      <div className="h-14 bg-white flex items-center justify-between px-4 border-b border-gray-200">
+        <div className="flex items-center gap-3">
+          <Link to="/" className="text-gray-600">
+            <FaArrowLeft className="w-5 h-5" />
+          </Link>
+          <div className="flex items-center gap-2">
+            <Avatar className="w-8 h-8 border-2 border-white">
+              <AvatarFallback className="bg-blue-200 text-xs">
+                {chatRoom.name.charAt(0)}
+              </AvatarFallback>
+            </Avatar>
+            <div>
+              <h2 className="font-semibold text-sm line-clamp-1">{chatRoom.name}</h2>
+              {chatRoom.memberCount && chatRoom.memberCount > 1 && <div className="flex items-center gap-1 text-xs text-gray-500">
+                <HiUsers className="w-3 h-3" />
+                <span>{chatRoom.memberCount}</span>
+              </div>}
+            </div>
           </div>
         </div>
+        <div className="flex items-center gap-3">
+          <button className="text-gray-600">
+            <HiOutlineSearch className="w-5 h-5 bg-white" />
+          </button>
+          {chatRoom.isSelfChat ? (
+            <button 
+              className="text-gray-600"
+              onClick={() => setDrawerOpen(true)}
+            >
+              <HiOutlineCloud className="w-5 h-5 bg-white" />
+            </button>
+          ) : (
+            <>
+              <button className="text-gray-600">
+                <HiOutlinePhone className="w-5 h-5 bg-white" />
+              </button>
+              <button className="text-gray-600">
+                <HiOutlineVideoCamera className="w-5 h-5 bg-white" />
+              </button>
+            </>
+          )}
+          <ChatHeaderMenu onOpenDrawer={() => setDrawerOpen(true)} />
+        </div>
       </div>
-      <div className="flex items-center gap-3">
-        <button className="text-gray-600">
-          <HiOutlineSearch className="w-5 h-5 bg-white" />
-        </button>
-        <button className="text-gray-600">
-          <HiOutlinePhone className="w-5 h-5 bg-white" />
-        </button>
-        <button className="text-gray-600">
-          <HiOutlineVideoCamera className="w-5 h-5 bg-white" />
-        </button>
-        <ChatHeaderMenu />
-      </div>
-    </div>
+      <TalkDrawer open={drawerOpen} onOpenChange={setDrawerOpen} />
+    </>
   )
 }

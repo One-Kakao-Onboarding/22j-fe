@@ -4,7 +4,7 @@ export const chatRooms: ChatRoom[] = [
     {
       id: '1',
       name: '김도훈',
-      lastMessage: '테스트',
+      lastMessage: '톡서랍을 제외한 다른 데이터/UI는 카카오톡 PC 버전을 가상으로 흉내낸 것으로 실제로 동작하지 않습니다.',
       time: '오후 3:41',
       avatar: null,
       isSelfChat: true,
@@ -132,6 +132,15 @@ export const chatMessages: Message[] = [
       content: '#춘식도락메뉴 분석 챌린지 1. 2 번...',
       time: '오후 12:23',
       isMe: false,
+      avatar: null,
+    },
+    {
+      id: '11',
+      roomId: '1',
+      sender: '김도훈',
+      content: '톡서랍을 제외한 다른 데이터/UI는 카카오톡 PC 버전을 가상으로 흉내낸 것으로 실제로 동작하지 않습니다.',
+      time: '오후 3:41',
+      isMe: true,
       avatar: null,
     },
 ]

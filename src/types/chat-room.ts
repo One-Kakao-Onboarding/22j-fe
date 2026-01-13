@@ -18,9 +18,3 @@ export type Message = {
   isMe: boolean
   avatar: string | null
 }
-
-export type ChatRoomInfo = {
-  id: string
-  name: string
-  memberCount: number
-}

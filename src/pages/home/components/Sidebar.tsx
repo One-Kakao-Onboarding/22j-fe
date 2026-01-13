@@ -1,11 +1,12 @@
-import { FaBell, FaCog, FaComment, FaEllipsisH, FaUser } from 'react-icons/fa';
+import { FaComment, FaEllipsisH, FaUser } from 'react-icons/fa';
+import { FiBell, FiSettings } from "react-icons/fi";
 
 const sidebarButtons = [
   { icon: FaUser },
   { icon: FaComment, active: true },
   { icon: FaEllipsisH },
-  { icon: FaBell },
-  { icon: FaCog },
+  { icon: FiBell },
+  { icon: FiSettings },
 ];
 
 export function Sidebar() {
@@ -23,9 +24,9 @@ export function Sidebar() {
       {sidebarButtons.slice(3).map(({ icon: Icon }, index) => (
         <button
           key={`sidebar-${index + 3}`}
-          className="w-14 h-5 rounded-full bg-gray-200 flex items-center justify-center text-gray-600"
+          className="w-14 h-5 rounded-full flex items-center justify-center text-gray-600"
         >
-          <Icon className="w-4 h-4 text-gray-600 leading-none" />
+          <Icon className="w-5 h-5 text-gray-600 leading-none" />
         </button>
       ))}
     </div>

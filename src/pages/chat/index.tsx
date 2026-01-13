@@ -27,16 +27,9 @@ export function ChatRoom() {
     return null
   }
 
-  const chatRoomInfo = {
-    id: chatRoom.id,
-    name: chatRoom.name,
-    memberCount: chatRoom.memberCount || 0,
-    avatars: [],
-  }
-
   return (
     <div className="flex flex-col h-screen bg-gray-100">
-      <ChatHeader chatRoomInfo={chatRoomInfo} />
+      <ChatHeader chatRoom={chatRoom} />
       <MessageList messages={messages} />
       <MessageInput />
     </div>
