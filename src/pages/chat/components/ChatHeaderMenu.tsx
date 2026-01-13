@@ -19,8 +19,8 @@ export function ChatHeaderMenu() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="text-gray-600">
-          <HiOutlineDotsVertical className="w-5 h-5" />
+        <button className="text-gray-600 bg-white">
+          <HiOutlineDotsVertical className="w-5 h-5 bg-white" />
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
