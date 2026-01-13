@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { TabsContent } from '@/components/ui/Tabs'
 import { FilterButtons } from './FilterButtons'
 import { FileGrid } from './FileGrid'
@@ -9,10 +10,20 @@ type DocumentTabContentProps = {
 }
 
 export function DocumentTabContent({ filters, files }: DocumentTabContentProps) {
+  const [selectedFilterId, setSelectedFilterId] = useState<string | null>(null)
+
   return (
     <TabsContent value="document" className="mt-4 space-y-4">
-      <FilterButtons filters={filters} />
-      <FileGrid files={files} filterType={(file) => file.type === 'document'} />
+      <FilterButtons
+        filters={filters}
+        selectedFilterId={selectedFilterId}
+        onFilterChange={setSelectedFilterId}
+      />
+      <FileGrid
+        files={files}
+        filterType={(file) => file.type === 'document'}
+        selectedFilterId={selectedFilterId}
+      />
     </TabsContent>
   )
 }
