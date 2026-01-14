@@ -1,6 +1,5 @@
 import type { ExploreItem } from "@/types/drawer";
 
-
 export const exploreItem: ExploreItem[] = [
   {
     id: '1',

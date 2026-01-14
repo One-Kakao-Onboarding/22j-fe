@@ -136,6 +136,9 @@ button:focus-visible {
   --color-kakao-yellow: #FEE500;
   --color-kakao-black: #000000;
   --color-kakao-blue: #ABC1D1;
+  --color-kanana-main: #FF3B5C;
+  --color-kanana-sub: #FF7081;
+  --background-image-kanana-grad: linear-gradient(135deg, #FF3B5C 0%, #FF82A0 100%);
   --color-chat-bg: #F5F5F5;
   --color-chat-bubble-other: #FFFFFF;
   --color-chat-bubble-me: #FEE500;

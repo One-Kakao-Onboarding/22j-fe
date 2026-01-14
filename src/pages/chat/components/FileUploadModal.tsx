@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/Dialog'
 import { HiOutlineDotsVertical } from 'react-icons/hi'
 import { HiOutlinePhoto, HiOutlineDocument, HiOutlineFilm, HiOutlineFolder } from 'react-icons/hi2'
-import type { DataType } from '@/types/file'
+import type { FileType } from '@/types/file'
 
 type FileUploadModalProps = {
   open: boolean
@@ -23,7 +23,7 @@ function truncateFileName(fileName: string, maxLength: number = 20): string {
   return fileName.substring(0, maxLength) + '...'
 }
 
-function getFileType(file: File): DataType {
+function getFileType(file: File): FileType {
   if (file.type.startsWith('image/')) return 'image'
   if (file.type.startsWith('video/')) return 'image'
   if (file.type.startsWith('audio/')) return 'image'

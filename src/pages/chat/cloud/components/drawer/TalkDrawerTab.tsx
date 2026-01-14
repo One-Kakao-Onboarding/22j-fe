@@ -1,10 +1,42 @@
 import { TabsContent } from '@/components/ui/Tabs'
+import { ALL_CATEGORIES } from '@/constants/categories'
+import { CategoryItem } from '@/pages/chat/cloud/components/drawer/CategoryItem'
+import { RecommendedCategoryCarousel } from '@/pages/chat/cloud/components/drawer/RecommendedCategoryCarousel'
+import { IoSparkles } from 'react-icons/io5'
 
 export function TalkDrawerTab() {
+  const handleCategoryClick = (categoryId: string) => {
+    // TODO: 카테고리별 파일 목록 페이지로 이동
+    console.log('Category clicked:', categoryId)
+  }
+
   return (
-    <TabsContent value="drawer" className="flex-1 m-0 p-0">
-      <div className="h-full flex items-center justify-center text-gray-400">
-        {/* 톡서랍 내용 (추후 구현) */}
+    <TabsContent value="drawer" className="flex-1 m-0 p-0 overflow-y-auto">
+      <div className="flex flex-col">
+        {/* AI 추천 카테고리 섹션 */}
+        <div className="my-4">
+          <div className="px-4 mb-4">
+            <h2 className="text-base font-semibold text-gray-900 flex items-center gap-2">
+            <IoSparkles className="w-5 h-5 text-kanana-main" />
+              AI 추천 카테고리
+            </h2>
+          </div>
+          <RecommendedCategoryCarousel onCategoryClick={handleCategoryClick} />
+        </div>
+
+
+        {/* 전체 카테고리 섹션 */}
+        <div className="my-4">
+          <div className="flex flex-col">
+            {ALL_CATEGORIES.map((category) => (
+              <CategoryItem
+                key={category.id}
+                category={category}
+                onClick={() => handleCategoryClick(category.id)}
+              />
+            ))}
+          </div>
+        </div>
       </div>
     </TabsContent>
   )
