@@ -1,9 +1,12 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
-import path from 'path'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
+import path from 'path';
 
-// https://vite.dev/config/
+
+const fullRepoName = process.env.GITHUB_REPOSITORY; 
+const base = fullRepoName ? `/${fullRepoName.split('/')[1]}/` : '/';
+
 export default defineConfig({
   plugins: [
     react(),
@@ -17,4 +20,5 @@ export default defineConfig({
   server: {
     allowedHosts: true,
   },
+  base,
 })

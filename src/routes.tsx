@@ -6,29 +6,34 @@ import { ChatRoom } from "@/pages/chat";
 import { TalkDrawer } from "@/pages/chat/drawer";
 import { createBrowserRouter } from "react-router";
 
-export const router = createBrowserRouter([
+export const router = createBrowserRouter(
+  [
+    {
+      path: '/',
+      element: <App />,
+      errorElement: <ErrorPage />,
+      children: [
+        {
+          element: <MainLayout />,
+          children: [
+            {
+              path: '/',
+              element: <Home />,
+            },
+            {
+              path: '/chat/:id',
+              element: <ChatRoom />,
+            },
+            {
+              path: '/chat/:id/drawer',
+              element: <TalkDrawer />,
+            },
+          ],
+        },
+      ],
+    },
+  ],
   {
-    path: '/',
-    element: <App />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        element: <MainLayout />,
-        children: [
-          {
-            path: '/',
-            element: <Home />,
-          },
-          {
-            path: '/chat/:id',
-            element: <ChatRoom />,
-          },
-          {
-            path: '/chat/:id/drawer',
-            element: <TalkDrawer />,
-          },
-        ],
-      },
-    ],
-  },
-])
+    basename: import.meta.env.BASE_URL
+  }
+)
