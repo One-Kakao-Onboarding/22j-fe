@@ -2,14 +2,13 @@ import { useState } from 'react'
 import { useParams } from 'react-router'
 import type { FileType } from '@/types/file'
 import PageWrapper from '@/components/PageWrapper'
-import { CategoryFilters } from '@/pages/chat/cloud/category/components/CategoryFilters'
-import { CategoryHeader } from '@/pages/chat/cloud/category/components/CategoryHeader'
-import { CategorySearchBar } from '@/pages/chat/cloud/category/components/CategorySearchBar'
+import { FileTypeFilters } from '@/pages/chat/cloud/components/FileTypeFilters'
+import { CloudHeader } from '@/pages/chat/cloud/components/CloudHeader'
 import { FileGroupedList } from '@/pages/chat/cloud/components/FileGroupedList'
 import { mockFiles } from '@/constants/file-mock-datas'
 
 export function CategoryPage() {
-  const { categoryId } = useParams<{ categoryId: string }>()
+  const { id, categoryId } = useParams<{ id: string; categoryId: string }>()
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedFilter, setSelectedFilter] = useState<FileType | 'all'>('all')
 
@@ -51,12 +50,27 @@ export function CategoryPage() {
     console.log('File clicked:', fileId)
   }
 
+  const handleFilterChange = (filter: FileType | 'all' | 'media' | 'file') => {
+    // media와 file은 실제 FileType으로 변환
+    if (filter === 'media') {
+      setSelectedFilter('image')
+    } else if (filter === 'file') {
+      setSelectedFilter('document')
+    } else {
+      setSelectedFilter(filter as FileType | 'all')
+    }
+  }
+
   return (
     <PageWrapper>
       <div className="flex flex-col h-screen bg-white">
-        <CategoryHeader title={categoryName} />
-        <CategorySearchBar value={searchQuery} onChange={setSearchQuery} />
-        <CategoryFilters selected={selectedFilter} onSelect={setSelectedFilter} />
+        <CloudHeader 
+          title={categoryName}
+          backTo={`/chat/${id}/cloud`}
+          searchValue={searchQuery}
+          onSearchChange={setSearchQuery}
+        />
+        <FileTypeFilters selected={selectedFilter} onSelect={handleFilterChange} />
 
         {/* 파일 리스트 (날짜별 그룹) */}
         <div className="flex-1 overflow-y-auto">

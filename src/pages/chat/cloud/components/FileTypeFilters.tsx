@@ -1,20 +1,20 @@
 import type { FileType } from '@/types/file'
 import { Button } from '@/components/ui/Button'
 
-type CategoryFiltersProps = {
-  selected: FileType | 'all'
-  onSelect: (filter: FileType | 'all') => void
+type FileTypeFiltersProps = {
+  selected: FileType | 'all' | 'media' | 'file'
+  onSelect: (filter: FileType | 'all' | 'media' | 'file') => void
 }
 
-const filters: { id: FileType | 'all'; label: string }[] = [
+const filters: { id: FileType | 'all' | 'media' | 'file'; label: string }[] = [
   { id: 'all', label: '모두' },
-  { id: 'image', label: '사진/영상' },
+  { id: 'media', label: '사진/영상' },
   { id: 'document', label: '문서' },
   { id: 'link', label: '링크' },
   { id: 'etc', label: '기타' },
 ]
 
-export function CategoryFilters({ selected, onSelect }: CategoryFiltersProps) {
+export function FileTypeFilters({ selected, onSelect }: FileTypeFiltersProps) {
   return (
     <div className="flex items-center gap-2 px-4 py-2 ">
       <div className="flex-1 flex items-center gap-2 overflow-x-auto">

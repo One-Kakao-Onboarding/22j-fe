@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { TabsContent } from '@/components/ui/Tabs'
 import type { FilterType } from '@/types/drawer'
-import { ExploreFilters } from './ExploreFilters'
+import type { FileType } from '@/types/file'
+import { FileTypeFilters } from '@/pages/chat/cloud/components/FileTypeFilters'
 import { FileGroupedList } from '@/pages/chat/cloud/components/FileGroupedList'
 import { mockFiles } from '@/constants/file-mock-datas'
 
@@ -23,9 +24,13 @@ export function ExploreTab() {
     console.log('File clicked:', fileId)
   }
 
+  const handleFilterChange = (filter: FileType | 'all' | 'media' | 'file') => {
+    setSelectedFilter(filter as FilterType)
+  }
+
   return (
     <TabsContent value="explore" className="flex-1 flex flex-col m-0 p-0 min-h-0">
-      <ExploreFilters selected={selectedFilter} onSelect={setSelectedFilter} />
+      <FileTypeFilters selected={selectedFilter} onSelect={handleFilterChange} />
       
       <div className="flex-1 overflow-y-auto">
         <FileGroupedList files={filteredFiles} onFileClick={handleFileClick} />
