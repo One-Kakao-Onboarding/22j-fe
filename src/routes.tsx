@@ -25,7 +25,7 @@ export const router = createBrowserRouter(
               element: <ChatRoom />,
             },
             {
-              path: '/chat/:id/drawer',
+              path: '/chat/:id/cloud',
               element: <TalkDrawer />,
             },
           ],

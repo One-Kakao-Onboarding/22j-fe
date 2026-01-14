@@ -1,6 +1,6 @@
 import type { Dayjs } from "dayjs"
 
-export type FileType = 'image' | 'document' | 'link' | 'etc'
+export type FileType = 'image' | 'document' | 'link' | 'text' | 'etc'
 
 export type FileTag = {
     id: number,

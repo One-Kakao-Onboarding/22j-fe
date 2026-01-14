@@ -43,7 +43,7 @@ export function ChatHeader({ chatRoom }: ChatHeaderProps) {
           <HiOutlineSearch className="w-5 h-5" />
         </button>
         {chatRoom.isSelfChat ? (
-          <Link to={`/chat/${id}/drawer`} className="text-gray-600">
+          <Link to={`/chat/${id}/cloud`} className="text-gray-600">
             <HiOutlineCloud className="w-5 h-5" />
           </Link>
         ) : (

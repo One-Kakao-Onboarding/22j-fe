@@ -39,7 +39,7 @@ function getFileType(file: File): FileType {
     return 'document'
   }
   
-  return 'file'
+  return 'etc'
 }
 
 function isImageFile(file: File): boolean {

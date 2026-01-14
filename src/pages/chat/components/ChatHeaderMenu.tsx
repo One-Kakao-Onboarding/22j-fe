@@ -33,7 +33,7 @@ export function ChatHeaderMenu({ chatRoomId }: ChatHeaderMenuProps) {
         <DropdownMenuItem>채팅방 다시 만들기</DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <Link to={chatRoomId ? `/chat/${chatRoomId}/drawer` : '#'}>
+          <Link to={chatRoomId ? `/chat/${chatRoomId}/cloud` : '#'}>
             채팅방 서랍
           </Link>
         </DropdownMenuItem>
