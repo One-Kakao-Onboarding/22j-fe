@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback, useRef } from 'react'
 import { useParams } from 'react-router'
 import { ChatHeader } from '@/pages/chat/components/ChatHeader'
 import { MessageList } from '@/pages/chat/components/MessageList'
 import { MessageInput } from '@/pages/chat/components/MessageInput'
+import { FileUploadModal } from '@/pages/chat/components/FileUploadModal'
 import { getChatRoomById, getMessagesByRoomId } from '@/services/chat/chat-service'
 // import { sendMessage } from '@/services/chat/chat-service' // API 연동 시 주석 해제
 import type { ChatRoom, Message } from '@/types/chat-room'
@@ -13,6 +14,9 @@ export function ChatRoom() {
   const { id } = useParams()
   const [chatRoom, setChatRoom] = useState<ChatRoom | null>(null)
   const [messages, setMessages] = useState<Message[]>([])
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([])
+  const [isFileModalOpen, setIsFileModalOpen] = useState(false)
+  const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (!id) return
@@ -38,6 +42,7 @@ export function ChatRoom() {
       time: dayjs(),
       isMe: true,
       avatar: null,
+      type: 'text',
     }
 
     setMessages((prev) => [...prev, optimisticMessage])
@@ -52,8 +57,6 @@ export function ChatRoom() {
       // })
 
       // 현재는 API가 없으므로 optimistic update만 유지
-      // API 연동 시 위 주석을 해제하고 아래 코드를 제거
-      console.log('메시지 전송 (API 미연동):', content)
     } catch (error) {
       // 에러 발생 시 optimistic update 롤백
       setMessages((prev) => prev.filter((msg) => msg.id !== optimisticMessage.id))
@@ -61,19 +64,108 @@ export function ChatRoom() {
     }
   }
 
+  const handleFiles = useCallback((files: FileList | File[]) => {
+    const fileArray = Array.from(files)
+    if (fileArray.length > 0) {
+      setSelectedFiles(fileArray)
+      setIsFileModalOpen(true)
+    }
+  }, [])
+
+  const handleDragOver = useCallback((e: React.DragEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+  }, [])
+
+  const handleDrop = useCallback((e: React.DragEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+
+    const files = e.dataTransfer.files
+    if (files.length > 0) {
+      handleFiles(files)
+    }
+  }, [handleFiles])
+
+  useEffect(() => {
+    const handlePaste = (e: ClipboardEvent) => {
+      const items = e.clipboardData?.items
+      if (!items) return
+
+      const files: File[] = []
+
+      for (let i = 0; i < items.length; i++) {
+        const item = items[i]
+        if (item.kind === 'file') {
+          const file = item.getAsFile()
+          if (file) {
+            files.push(file)
+          }
+        }
+      }
+
+      if (files.length > 0) {
+        e.preventDefault()
+        e.stopPropagation()
+        handleFiles(files)
+      }
+    }
+
+    window.addEventListener('paste', handlePaste, true)
+    
+    const container = containerRef.current
+    if (container) {
+      container.addEventListener('paste', handlePaste as EventListener)
+    }
+    
+    return () => {
+      window.removeEventListener('paste', handlePaste, true)
+      if (container) {
+        container.removeEventListener('paste', handlePaste as EventListener)
+      }
+    }
+  }, [handleFiles])
+
+  const handleFileModalClose = useCallback(() => {
+    setIsFileModalOpen(false)
+    setSelectedFiles([])
+  }, [])
+
+  const handleFileSend = useCallback(() => {
+    // TODO: 실제 파일 업로드 로직 구현
+    handleFileModalClose()
+  }, [selectedFiles, handleFileModalClose])
+
   if (!id || !chatRoom) {
     return null
   }
 
   return (
     <PageWrapper>
-      <div className="relative flex flex-col h-screen bg-kakao-blue">
+      <div
+        ref={containerRef}
+        className="relative flex flex-col h-screen bg-kakao-blue"
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
+        tabIndex={-1}
+      >
         <div className="flex-1 flex flex-col overflow-hidden pb-[69px]">
           <ChatHeader chatRoom={chatRoom} />
           <MessageList messages={messages} />
         </div>
         <MessageInput onSend={handleSendMessage} />
       </div>
+
+      {/* 파일 전송 모달 */}
+      {selectedFiles.length > 0 && (
+        <FileUploadModal
+          open={isFileModalOpen}
+          onOpenChange={setIsFileModalOpen}
+          files={selectedFiles}
+          onCancel={handleFileModalClose}
+          onSend={handleFileSend}
+        />
+      )}
     </PageWrapper>
   )
 }

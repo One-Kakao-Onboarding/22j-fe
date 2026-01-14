@@ -1,0 +1,1 @@
+export type DataType = 'image' | 'document' | 'link' | 'file' | 'text'

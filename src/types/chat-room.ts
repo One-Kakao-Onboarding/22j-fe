@@ -1,3 +1,4 @@
+import type { DataType } from '@/types/file'
 import type { Dayjs } from 'dayjs'
 
 export type ChatRoom = {
@@ -16,6 +17,7 @@ export type Message = {
   roomId: string
   sender: string
   content: string
+  type: DataType
   time: Dayjs
   isMe: boolean
   avatar: string | null
