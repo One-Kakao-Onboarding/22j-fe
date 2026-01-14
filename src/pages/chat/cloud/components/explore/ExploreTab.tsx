@@ -2,7 +2,8 @@ import { useState } from 'react'
 import { TabsContent } from '@/components/ui/Tabs'
 import type { FilterType, ExploreItem } from '@/types/drawer'
 import { ExploreFilters } from './ExploreFilters'
-import { ItemCard } from './ItemCard'
+import { ItemCard } from '@/pages/chat/cloud/components/explore/ItemCard'
+
 
 // Mock data
 const mockItems: ExploreItem[] = [

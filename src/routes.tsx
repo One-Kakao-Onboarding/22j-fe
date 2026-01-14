@@ -3,7 +3,7 @@ import { MainLayout } from "@/layouts/MainLayout";
 import { ErrorPage } from "@/pages/ErrorPage";
 import { Home } from "@/pages/home";
 import { ChatRoom } from "@/pages/chat";
-import { TalkDrawer } from "@/pages/chat/drawer";
+import { TalkDrawer } from "@/pages/chat/cloud";
 import { createBrowserRouter } from "react-router";
 
 export const router = createBrowserRouter(

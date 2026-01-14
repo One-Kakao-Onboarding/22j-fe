@@ -5,9 +5,9 @@ import { Input } from '@/components/ui/Input'
 import { FaArrowLeft } from 'react-icons/fa'
 import { HiOutlineSearch } from 'react-icons/hi'
 import type { MainTab } from '@/types/drawer'
-import { MainTabs } from '@/pages/chat/drawer/components/MainTabs'
-import { TalkDrawerTab } from '@/pages/chat/drawer/components/TalkDrawerTab'
-import { ExploreTab } from '@/pages/chat/drawer/components/ExploreTab'
+import { MainTabs } from '@/pages/chat/cloud/components/MainTabs'
+import { TalkDrawerTab } from '@/pages/chat/cloud/components/drawer/TalkDrawerTab'
+import { ExploreTab } from '@/pages/chat/cloud/components/explore/ExploreTab'
 import PageWrapper from '@/components/PageWrapper'
 
 export function TalkDrawer() {
