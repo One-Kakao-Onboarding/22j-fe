@@ -1,70 +1,72 @@
-import { z } from 'zod'
-
-const UploadFileResponseSchema = z.object({
-  id: z.string(),
-  url: z.string(),
-  name: z.string(),
-  size: z.number(),
-  type: z.string(),
-  createdAt: z.string(),
-})
-
-export type UploadFileResponse = z.infer<typeof UploadFileResponseSchema>
-
-export type UploadFileRequest = {
-  file: File
-  roomId?: string
-}
+import { instance, BASE_URL } from '@/services/core/http-instance'
+import type { UploadFileRequest } from '@/services/file/file-dto'
+import type { UploadFileResponse } from '@/services/file/file-dto'
+import { UploadFileResponseSchema } from '@/services/file/file-dto'
+import axios from 'axios'
 
 /**
  * 파일 업로드
  * POST /file
  * Content-Type: multipart/form-data
  */
-export async function uploadFile(request: UploadFileRequest): Promise<UploadFileResponse> {
-  // TODO: 실제 API 연동 시 아래 주석 해제
-  // const formData = new FormData()
-  // formData.append('multipartFile', request.file)
-  // if (request.roomId) {
-  //   formData.append('roomId', request.roomId)
-  // }
-  // 
-  // const response = await instance.post<typeof UploadFileResponseSchema>(
-  //   '/file',
-  //   formData,
-  //   {
-  //     schema: UploadFileResponseSchema,
-  //     headers: {
-  //       'Content-Type': 'multipart/form-data',
-  //     },
-  //   }
-  // )
-  // 
-  // return response.data
+export const uploadFile = async (request: UploadFileRequest): Promise<UploadFileResponse> => {
+  const formData = new FormData()
+  formData.append('multipartFile', request.file)
 
-  // Mock 응답 (개발용)
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        id: `file-${Date.now()}`,
-        url: URL.createObjectURL(request.file),
-        name: request.file.name,
-        size: request.file.size,
-        type: request.file.type,
-        createdAt: new Date().toISOString(),
-      })
-    }, 500)
-  })
+  const response = await instance.post(
+    '/file',
+    formData,
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    }
+  )
+  
+  // 응답을 스키마로 검증
+  const parsedData = UploadFileResponseSchema.parse(response.data)
+  return parsedData
 }
 
 /**
  * 여러 파일 업로드
  */
-export async function uploadFiles(files: File[], roomId?: string): Promise<UploadFileResponse[]> {
-  const uploadPromises = files.map(file => uploadFile({ file, roomId }))
+export const uploadFiles = async (files: File[]): Promise<UploadFileResponse[]> => {
+  const uploadPromises = files.map(file => uploadFile({ file }))
   return Promise.all(uploadPromises)
 }
 
-export async function getFile(fileId: string): Promise<File | undefined> {
-  return undefined
+/**
+ * 파일 다운로드 (바이트 배열을 File 객체로 변환)
+ * GET /file/:fileId
+ * Response: binary (byte[])
+ */
+export const getFile = async (fileId: string): Promise<File | null> => {
+  try {
+    const response = await axios.get(`${BASE_URL}/file/${fileId}`, {
+      responseType: 'blob', // 바이너리 데이터를 blob으로 받기
+      withCredentials: true,
+    })
+    
+    // Blob을 File 객체로 변환
+    const blob = response.data as Blob
+    
+    // Content-Disposition 헤더에서 파일명 추출
+    const contentDisposition = response.headers['content-disposition']
+    let fileName = `file-${fileId}`
+    if (contentDisposition) {
+      const matches = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/.exec(contentDisposition)
+      if (matches && matches[1]) {
+        fileName = matches[1].replace(/['"]/g, '')
+      }
+    }
+    
+    const file = new File([blob], fileName, { type: blob.type })
+    return file
+
+  } catch (error) {
+    console.error('Failed to fetch file:', error)
+    return null
+  }
 }
+

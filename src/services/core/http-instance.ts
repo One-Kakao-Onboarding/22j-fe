@@ -4,7 +4,6 @@ import { z } from 'zod';
 import axios, { type AxiosRequestConfig } from 'axios';
 import { silentParse } from '@/services/core/silent-parse';
 import { CustomError } from '@/services/core/custom-error';
-import { ResultEnum, ErrorCodeEnum } from '@/constants/codes';
 
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
@@ -16,19 +15,24 @@ interface RequestInitWithSchema<T extends z.ZodTypeAny>
 const getApiResponseSchema = <T extends z.ZodTypeAny>(schema: T) =>
   z
     .object({
-      result: ResultEnum,
-      data: schema.nullable(),
-      message: z.string().nullable(),
-      errorCode: ErrorCodeEnum.nullable(),
+      success: z.literal(true),
+      code: z.number(),
+      data: z.object(schema),
+      message: z.string(),
+      requestId: z.string().nullable(),
     })
     .strict();
 
-export const BASE_URL = import.meta.env.VITE_BASE_URL;
+export const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8081';
 
 class Instance {
     private readonly baseUrl: string;
-    constructor(baseUrl: string = BASE_URL ?? 'localhost:8080') {
+    constructor(baseUrl: string = BASE_URL) {
       this.baseUrl = baseUrl;
+    }
+    
+    getBaseUrl(): string {
+      return this.baseUrl;
     }
 
   // 기본 요청 함수
@@ -64,11 +68,11 @@ class Instance {
       { showToast },
     );
 
-    if (parsedData.result === 'FAIL') {
-      console.error(parsedData.errorCode + ' ' + parsedData.message);
+    if (!parsedData.success) {
+      console.error(parsedData.code.toString() + ' ' + parsedData.message);
       throw new CustomError(
-        parsedData.errorCode || 'UNKNOWN_ERROR_CODE',
-        parsedData.message || '알 수 없는 오류',
+        parsedData.code.toString(),
+        parsedData.message,
       );
     }
 

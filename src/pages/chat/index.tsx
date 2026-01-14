@@ -9,6 +9,7 @@ import { getChatRoomById, getMessagesByRoomId } from '@/services/chat/chat-servi
 import type { ChatRoom, Message } from '@/types/chat-room'
 import PageWrapper from '@/components/PageWrapper'
 import dayjs from '@/lib/dayjs'
+import { uploadFiles } from '@/services/file/file-service'
 
 export function ChatRoom() {
   const { id } = useParams()
@@ -132,10 +133,10 @@ export function ChatRoom() {
     setSelectedFiles([])
   }, [])
 
-  const handleFileSend = useCallback(() => {
-    // TODO: 실제 파일 업로드 로직 구현
+  const handleFileSend = useCallback(async () => {
+    const uploadedFiles = await uploadFiles(selectedFiles)
     handleFileModalClose()
-  }, [handleFileModalClose])
+  }, [handleFileModalClose, selectedFiles])
 
   const handlePlusClick = () => {
     fileInputRef.current?.click()
