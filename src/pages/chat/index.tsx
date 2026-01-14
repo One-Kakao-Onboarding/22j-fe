@@ -134,9 +134,74 @@ export function ChatRoom() {
   }, [])
 
   const handleFileSend = useCallback(async () => {
-    const uploadedFiles = await uploadFiles(selectedFiles)
+    if (!id || selectedFiles.length === 0) return
+
+    // 즉시 모달 닫기
     handleFileModalClose()
-  }, [handleFileModalClose, selectedFiles])
+
+    // 각 파일마다 낙관적 업데이트로 메시지 생성
+    const fileMessages: Message[] = selectedFiles.map((file) => ({
+      id: `temp-file-${Date.now()}-${Math.random()}`,
+      roomId: id,
+      sender: '나',
+      content: '', // 파일 메시지는 content 비움
+      time: dayjs(),
+      isMe: true,
+      avatar: null,
+      type: 'document', // 임시, 실제로는 file type 판별
+      fileData: {
+        fileName: file.name,
+        fileSize: file.size,
+        fileType: file.type.startsWith('image/') ? 'image' : 'document',
+        expiryDate: dayjs().add(1, 'month'), // 1개월 후 만료
+        uploadStatus: 'pending',
+      },
+    }))
+
+    // UI에 즉시 추가
+    setMessages((prev) => [...prev, ...fileMessages])
+
+    // 파일 업로드 API 호출
+    try {
+      const uploadResults = await uploadFiles(selectedFiles)
+      
+      // 성공: pending 상태를 success로 변경
+      setMessages((prev) =>
+        prev.map((msg) => {
+          const fileMsg = fileMessages.find((fm) => fm.id === msg.id)
+          if (fileMsg && msg.fileData?.uploadStatus === 'pending') {
+            return {
+              ...msg,
+              fileData: {
+                ...msg.fileData,
+                uploadStatus: 'success' as const,
+              },
+            }
+          }
+          return msg
+        })
+      )
+    } catch (error) {
+      console.error('파일 업로드 실패:', error)
+      
+      // 실패: pending 상태를 error로 변경
+      setMessages((prev) =>
+        prev.map((msg) => {
+          const fileMsg = fileMessages.find((fm) => fm.id === msg.id)
+          if (fileMsg && msg.fileData?.uploadStatus === 'pending') {
+            return {
+              ...msg,
+              fileData: {
+                ...msg.fileData,
+                uploadStatus: 'error' as const,
+              },
+            }
+          }
+          return msg
+        })
+      )
+    }
+  }, [id, selectedFiles, handleFileModalClose])
 
   const handlePlusClick = () => {
     fileInputRef.current?.click()

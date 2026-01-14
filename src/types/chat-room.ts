@@ -12,6 +12,16 @@ export type ChatRoom = {
   isSelfChat?: boolean
 }
 
+export type UploadStatus = 'pending' | 'success' | 'error'
+
+export type FileMessageData = {
+  fileName: string
+  fileSize: number
+  fileType: FileType
+  expiryDate?: Dayjs
+  uploadStatus?: UploadStatus
+}
+
 export type Message = {
   id: string
   roomId: string
@@ -21,4 +31,5 @@ export type Message = {
   time: Dayjs
   isMe: boolean
   avatar: string | null
+  fileData?: FileMessageData
 }
