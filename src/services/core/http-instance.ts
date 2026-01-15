@@ -17,8 +17,8 @@ const getApiResponseSchema = <T extends z.ZodTypeAny>(schema: T) =>
     .object({
       success: z.literal(true),
       code: z.number(),
-      data: z.object(schema),
-      message: z.string(),
+      data: schema,
+      message: z.string().nullable(),
       requestId: z.string().nullable(),
     })
     .strict();
@@ -72,7 +72,7 @@ class Instance {
       console.error(parsedData.code.toString() + ' ' + parsedData.message);
       throw new CustomError(
         parsedData.code.toString(),
-        parsedData.message,
+        parsedData.message ?? '',
       );
     }
 

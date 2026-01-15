@@ -1,6 +1,5 @@
 import { instance, BASE_URL } from '@/services/core/http-instance'
 import type { UploadFileRequest } from '@/services/file/file-dto'
-import type { UploadFileResponse } from '@/services/file/file-dto'
 import { UploadFileResponseSchema } from '@/services/file/file-dto'
 import axios from 'axios'
 
@@ -9,7 +8,7 @@ import axios from 'axios'
  * POST /file
  * Content-Type: multipart/form-data
  */
-export const uploadFile = async (request: UploadFileRequest): Promise<UploadFileResponse> => {
+export const uploadFile = async (request: UploadFileRequest) => {
   const formData = new FormData()
   formData.append('multipartFile', request.file)
 
@@ -17,21 +16,22 @@ export const uploadFile = async (request: UploadFileRequest): Promise<UploadFile
     '/file',
     formData,
     {
+      schema: UploadFileResponseSchema,
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     }
   )
   
-  // 응답을 스키마로 검증
-  const parsedData = UploadFileResponseSchema.parse(response.data)
-  return parsedData
+  // instance.post는 이미 파싱된 응답을 반환
+  // { success, code, data: {...}, message, requestId }
+  return response.data
 }
 
 /**
  * 여러 파일 업로드
  */
-export const uploadFiles = async (files: File[]): Promise<UploadFileResponse[]> => {
+export const uploadFiles = async (files: File[]) => {
   const uploadPromises = files.map(file => uploadFile({ file }))
   return Promise.all(uploadPromises)
 }
