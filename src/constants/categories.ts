@@ -48,15 +48,16 @@ export const ALL_CATEGORIES: Category[] = [
   { id: 'COUPON', label: '쿠폰', icon: HiTicket, color: '#FF7043' },
   { id: 'SHOPPING', label: '쇼핑', icon: HiShoppingBag, color: '#FF7043' },
   
+  // 자기계발 그룹 (옐로우 계열 - 더 쨍한 색)
+  { id: 'JOB', label: '업무', icon: HiBriefcase, color: '#FFD600' },
+  { id: 'STUDY', label: '학습', icon: HiAcademicCap, color: '#FFD600' },
+  { id: 'INSIGHT', label: '인사이트', icon: HiLightBulb, color: '#FFD600' },
+
   // 라이프 그룹 (블루 계열 - 더 쨍한 색)
   { id: 'TRAVEL', label: '여행', icon: HiGlobeAlt, color: '#42A5F5' },
   { id: 'LIVING', label: '리빙', icon: HiHome, color: '#42A5F5' },
   { id: 'PET', label: '반려동물', icon: HiSparkles, color: '#42A5F5' },
-  
-  // 자기계발 그룹 (퍼플 계열 - 더 쨍한 색)
-  { id: 'JOB', label: '업무', icon: HiBriefcase, color: '#BA68C8' },
-  { id: 'STUDY', label: '학습', icon: HiAcademicCap, color: '#BA68C8' },
-  { id: 'INSIGHT', label: '인사이트', icon: HiLightBulb, color: '#BA68C8' },
+
   
   // 취미/여가 그룹 (그린 계열 - 더 쨍한 색)
   { id: 'COOKING', label: '요리', icon: HiCake, color: '#66BB6A' },

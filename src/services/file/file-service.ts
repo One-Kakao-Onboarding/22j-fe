@@ -132,3 +132,15 @@ export const searchFiles = async (params: SearchFilesParams): Promise<FileRespon
   
   return response.data as FileResponse[]
 }
+
+/**
+ * 추천 카테고리 조회
+ * GET /recommend/category
+ */
+export const getRecommendedCategories = async (): Promise<string[]> => {
+  const response = await instance.get('/recommend/category', {
+    schema: z.array(z.string()),
+  })
+  
+  return response.data as string[]
+}

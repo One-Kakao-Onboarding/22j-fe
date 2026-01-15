@@ -51,10 +51,10 @@ export function FileListItem({ file, onClick }: FileListItemProps) {
       {/* 파일 정보 */}
       <div className="flex-1 min-w-0 text-left">
         <h3 className="text-sm font-medium text-gray-900 truncate mb-1">
-          {file.originalFileName}
+          {file.fileOverview}
         </h3>
         <p className="text-xs text-gray-500 line-clamp-1 mb-2">
-          {file.fileOverview}
+          {file.originalFileName}
         </p>
         
         {/* 태그 */}
