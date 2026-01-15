@@ -1,5 +1,4 @@
 import type { Category } from '@/constants/categories'
-import { getPastelColor } from '@/lib/background'
 
 type RecommendedCategoryCardProps = {
   category: Category
@@ -14,11 +13,10 @@ export function RecommendedCategoryCard({ category, onClick }: RecommendedCatego
       onClick={onClick}
       className="shrink-0 flex flex-col items-center gap-3 cursor-pointer group"
     >
-      <div 
-        className="w-16 h-16 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-105"
-        style={{ background: getPastelColor(category.label) }}
-      >
-        <Icon className="w-8 h-8 text-gray-900 stroke-1" />
+      <div className="flex items-center justify-center transition-transform group-hover:scale-105">
+        <div style={{ color: category.color }}>
+          <Icon className="w-12 h-12" />
+        </div>
       </div>
       <div className="text-center">
         <p className="text-sm font-medium text-gray-900 line-clamp-2">{category.label}</p>

@@ -1,37 +1,76 @@
 import type { ComponentType } from 'react'
-import { HiOutlineStar, HiOutlineRocketLaunch, HiOutlineLightBulb, HiOutlineFolder, HiOutlineDocument, HiOutlinePhoto, HiOutlineVideoCamera, HiOutlineMusicalNote, HiOutlineLink, HiOutlineArchiveBox, HiOutlineClipboardDocument } from 'react-icons/hi2'
+import {
+  HiHeart,
+  HiShieldCheck,
+  HiBanknotes,
+  HiTicket,
+  HiGlobeAlt,
+  HiHome,
+  HiSparkles,
+  HiShoppingBag,
+  HiBriefcase,
+  HiCake,
+  HiLightBulb,
+  HiPuzzlePiece,
+  HiAcademicCap,
+  HiFolder,
+} from 'react-icons/hi2'
 
 export type Category = {
   id: string
   label: string
   icon: ComponentType<{ className?: string }>
+  color: string
   isRecommended?: boolean
 }
 
 /**
- * 추천 카테고리
- * - 빈번도 높은 카테고리
+ * 전체 카테고리 목록
+ * 카테고리 그룹별로 색상 통일:
+ * - 개인/생활: 건강(#FF6B9D), 개인정보(#FF6B9D), 금융(#FF6B9D)
+ * - 쇼핑/혜택: 쿠폰(#FF7043), 쇼핑(#FF7043)
+ * - 라이프: 여행(#42A5F5), 리빙(#42A5F5), 반려동물(#42A5F5)
+ * - 자기계발: 업무(#BA68C8), 학습(#BA68C8), 인사이트(#BA68C8)
+ * - 취미/여가: 요리(#66BB6A), 취미(#66BB6A)
+ * - 기타: 기타(#BDBDBD)
  */
-export const RECOMMENDED_CATEGORIES: Category[] = [
-  { id: 'recent-activity', label: '최근 활동', icon: HiOutlineRocketLaunch, isRecommended: true },
-  { id: 'all-accounts', label: '개인정보', icon: HiOutlineStar, isRecommended: true },
-  { id: 'ideas', label: '여행', icon: HiOutlineLightBulb, isRecommended: true },
-  { id: 'files', label: '일상', icon: HiOutlineFolder, isRecommended: true },
-  { id: 'documents', label: '게임', icon: HiOutlineDocument, isRecommended: true },
-  { id: 'documents', label: '프로젝트', icon: HiOutlineDocument, isRecommended: true },
+export const ALL_CATEGORIES: Category[] = [
+  // 개인/생활 그룹 (핑크 계열 - 더 쨍한 색)
+  { id: 'health', label: '건강', icon: HiHeart, color: '#FF6B9D' },
+  { id: 'personal', label: '개인정보', icon: HiShieldCheck, color: '#FF6B9D' },
+  { id: 'finance', label: '금융', icon: HiBanknotes, color: '#FF6B9D' },
+  
+  // 쇼핑/혜택 그룹 (오렌지 계열 - 더 쨍한 색)
+  { id: 'coupon', label: '쿠폰', icon: HiTicket, color: '#FF7043' },
+  { id: 'shopping', label: '쇼핑', icon: HiShoppingBag, color: '#FF7043' },
+  
+  // 라이프 그룹 (블루 계열 - 더 쨍한 색)
+  { id: 'travel', label: '여행', icon: HiGlobeAlt, color: '#42A5F5' },
+  { id: 'living', label: '리빙', icon: HiHome, color: '#42A5F5' },
+  { id: 'pet', label: '반려동물', icon: HiSparkles, color: '#42A5F5' },
+  
+  // 자기계발 그룹 (퍼플 계열 - 더 쨍한 색)
+  { id: 'work', label: '업무', icon: HiBriefcase, color: '#BA68C8' },
+  { id: 'study', label: '학습', icon: HiAcademicCap, color: '#BA68C8' },
+  { id: 'insight', label: '인사이트', icon: HiLightBulb, color: '#BA68C8' },
+  
+  // 취미/여가 그룹 (그린 계열 - 더 쨍한 색)
+  { id: 'cooking', label: '요리', icon: HiCake, color: '#66BB6A' },
+  { id: 'hobby', label: '취미', icon: HiPuzzlePiece, color: '#66BB6A' },
+  
+  // 기타
+  { id: 'etc', label: '기타', icon: HiFolder, color: '#BDBDBD' },
 ]
 
 /**
- * 전체 카테고리 목록
- * TODO: 기획 완료 후 실제 카테고리로 대체
+ * 추천 카테고리 (ALL_CATEGORIES에서 랜덤하게 8개)
  */
-export const ALL_CATEGORIES: Category[] = [
-  { id: 'category-1', label: '카테고리 1', icon: HiOutlineFolder },
-  { id: 'category-2', label: '카테고리 2', icon: HiOutlineDocument },
-  { id: 'category-3', label: '카테고리 3', icon: HiOutlinePhoto },
-  { id: 'category-4', label: '카테고리 4', icon: HiOutlineVideoCamera },
-  { id: 'category-5', label: '카테고리 5', icon: HiOutlineMusicalNote },
-  { id: 'category-6', label: '카테고리 6', icon: HiOutlineLink },
-  { id: 'category-7', label: '카테고리 7', icon: HiOutlineArchiveBox },
-  { id: 'category-8', label: '카테고리 8', icon: HiOutlineClipboardDocument },
-]
+function getRandomCategories<T>(arr: T[], count: number): T[] {
+  const shuffled = [...arr].sort(() => Math.random() - 0.5)
+  return shuffled.slice(0, count)
+}
+
+export const RECOMMENDED_CATEGORIES: Category[] = getRandomCategories(ALL_CATEGORIES, 8).map(cat => ({
+  ...cat,
+  isRecommended: true,
+}))

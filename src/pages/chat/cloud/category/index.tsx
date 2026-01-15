@@ -7,6 +7,7 @@ import { CloudHeader } from '@/pages/chat/cloud/components/CloudHeader'
 import { FileGroupedList } from '@/pages/chat/cloud/components/FileGroupedList'
 import { getFileList } from '@/services/file/file-service'
 import { mapFileResponsesToFileItems } from '@/services/file/file-mapper'
+import { ALL_CATEGORIES } from '@/constants/categories'
 
 export function CategoryPage() {
   const { id, categoryId } = useParams<{ id: string; categoryId: string }>()
@@ -16,7 +17,9 @@ export function CategoryPage() {
   const [isLoading, setIsLoading] = useState(true)
 
   // 카테고리 이름 가져오기
-  const categoryName = categoryId === 'all' ? '전체 파일' : '카카오' // TODO: categoryId로 실제 카테고리 이름 조회
+  const categoryName = categoryId === 'all' 
+    ? '전체 파일' 
+    : ALL_CATEGORIES.find(cat => cat.id === categoryId)?.label || '카테고리'
 
   // 파일 리스트 조회
   useEffect(() => {

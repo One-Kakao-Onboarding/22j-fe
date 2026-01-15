@@ -46,7 +46,7 @@ export function RecentFilesSection() {
   }
 
   return (
-    <div className="m-4 py-4 mt-0 rounded-lg bg-white">
+    <div className="m-4 py-4 mt-0 rounded-lg bg-white shadow-sm">
       
       {/* 헤더 */}
       <div className="px-4 mb-2 flex items-center justify-between">

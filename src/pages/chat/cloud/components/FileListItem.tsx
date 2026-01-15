@@ -1,8 +1,6 @@
 import { useState } from 'react'
 import type { FileItem } from '@/types/file'
-import { HiOutlineEllipsisVertical } from 'react-icons/hi2'
 import { FilePreview } from '@/components/FilePreview'
-import { getPastelColor } from '@/lib/background'
 import { getFile } from '@/services/file/file-service'
 
 type FileListItemProps = {
@@ -65,11 +63,7 @@ export function FileListItem({ file, onClick }: FileListItemProps) {
             {file.tags.map((tag) => (
               <span
                 key={tag.id}
-                className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium"
-                style={{ 
-                  backgroundColor: getPastelColor(tag.description),
-                  color: '#374151'
-                }}
+                className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-900"
               >
                 {tag.description}
               </span>
@@ -77,17 +71,6 @@ export function FileListItem({ file, onClick }: FileListItemProps) {
           </div>
         )}
       </div>
-
-      {/* 우측 더보기 */}
-      <button 
-        onClick={(e) => {
-          e.stopPropagation()
-          // TODO: 파일 메뉴 열기
-        }}
-        className="shrink-0 w-8 h-8 flex items-center justify-center text-gray-400 hover:text-gray-600"
-      >
-        <HiOutlineEllipsisVertical className="w-5 h-5" />
-      </button>
     </div>
   )
 }
