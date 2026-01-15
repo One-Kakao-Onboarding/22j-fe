@@ -26,10 +26,13 @@ export function TalkDrawerTab() {
           </div>
           <RecommendedCategoryCarousel onCategoryClick={handleCategoryClick} />
         </div>
-
-
+        
         {/* 전체 카테고리 섹션 */}
-        <div className="my-4">
+        <div className="mb-4">
+          <div className="h-px mx-4 bg-gray-200 mb-4" />
+          <h3 className="px-4 text-xs text-gray-600 flex items-center gap-1">
+            전체 카테고리
+          </h3>
           <div className="flex flex-col">
             {ALL_CATEGORIES.map((category) => (
               <CategoryItem

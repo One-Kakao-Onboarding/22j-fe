@@ -19,6 +19,7 @@ export const RECOMMENDED_CATEGORIES: Category[] = [
   { id: 'ideas', label: '여행', icon: HiOutlineLightBulb, isRecommended: true },
   { id: 'files', label: '일상', icon: HiOutlineFolder, isRecommended: true },
   { id: 'documents', label: '게임', icon: HiOutlineDocument, isRecommended: true },
+  { id: 'documents', label: '프로젝트', icon: HiOutlineDocument, isRecommended: true },
 ]
 
 /**
