@@ -1,7 +1,9 @@
+import { useState } from 'react'
 import type { FileItem } from '@/types/file'
 import { HiOutlineEllipsisVertical } from 'react-icons/hi2'
 import { FilePreview } from '@/components/FilePreview'
 import { getPastelColor } from '@/lib/background'
+import { getFile } from '@/services/file/file-service'
 
 type FileListItemProps = {
   file: FileItem
@@ -9,10 +11,41 @@ type FileListItemProps = {
 }
 
 export function FileListItem({ file, onClick }: FileListItemProps) {
+  const [isDownloading, setIsDownloading] = useState(false)
+
+  const handleClick = async () => {
+    if (onClick) {
+      onClick()
+      return
+    }
+
+    // 파일 다운로드 및 열기
+    try {
+      setIsDownloading(true)
+      const downloadedFile = await getFile(file.id.toString())
+      
+      if (downloadedFile) {
+        const url = URL.createObjectURL(downloadedFile)
+        window.open(url, '_blank')
+        
+        // URL 정리 (일정 시간 후)
+        setTimeout(() => {
+          URL.revokeObjectURL(url)
+        }, 60000) // 1분 후
+      }
+    } catch (error) {
+      console.error('파일 열기 실패:', error)
+    } finally {
+      setIsDownloading(false)
+    }
+  }
+
   return (
     <div
-      onClick={onClick}
-      className="w-full h-auto px-4 py-3 flex items-start gap-3 hover:bg-gray-50 cursor-pointer transition-colors"
+      onClick={handleClick}
+      className={`w-full h-auto px-4 py-3 flex items-start gap-3 hover:bg-gray-50 transition-colors ${
+        isDownloading ? 'cursor-wait opacity-50' : 'cursor-pointer'
+      }`}
     >
       {/* 파일 미리보기/아이콘 */}
       <FilePreview file={file} size="lg" />
