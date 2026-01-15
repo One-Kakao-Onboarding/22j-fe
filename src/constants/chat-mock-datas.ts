@@ -6,10 +6,10 @@ const BASE_TIME = dayjs('2026-01-01 15:41')
 export const chatRooms: ChatRoom[] = [
     {
       id: '1',
-      name: 'astor.star',
+      name: '22제이',
       lastMessage: '이 채팅을 클릭해 주세요!',
       time: BASE_TIME,
-      avatar: null,
+      avatar: "https://i.namu.wiki/i/GQMqb8jtiqpCo6_US7jmWDO30KfPB2MMvbdURVub61Rs6ALKqbG-nUATj-wNk7bXXWIDjiLHJxWYkTELUgybkA.webp",
       isSelfChat: true,
     },
     {
